@@ -3,9 +3,9 @@
 
 #define DATA_COUNT 5
 
-/* 鋼板のセンサーデータ集計プログラム
+/* Steel plate thickness data aggregation program
 
-鋼板の「板厚（ミリ）」データを引数として複数受け取り、その合計値や最大値・最小値を算出する。
+Accepts multiple "thickness (mm)" data of steel plates as arguments and calculates their sum, maximum, and minimum values.
 */
 int main(int argc, char *argv[])
 {

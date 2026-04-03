@@ -5,31 +5,33 @@
 #include <string.h>
 #include "calc.h"
 
-/* 引数から板厚データ配列に変換する
+/* Convert command-line arguments to thickness data array
 
 Args:
-    argc (int): 引数の要素数
-    *argv[]: 引数の文字列配列
-    thicknessDataCount (int): 板厚データの要素数
-    thicknessData[] (int): 板厚データ
+    argc (int): Number of command-line arguments
+    *argv[]: Array of argument strings
+    thicknessDataCount (int): Number of thickness data elements
+    thicknessData[] (int): Thickness data array
+
 Returns:
-    変換が成功した場合は 0, 失敗した場合は 1 を返す。
+    Returns 0 if conversion succeeds, 1 if it fails.
+
 Raises:
-    以下の場合は異常終了とする
-    - thicknessData の要素数が 1未満の場合
-    - thicknessData の要素数と引数の数 (argv[0] を除く) が一致しない時
-    - 引数に数値でない文字列が含まれるとき (argv[0] を除く)
+    Abnormal termination in the following cases:
+    - Number of thicknessData elements is less than 1
+    - Number of thicknessData elements does not match the number of arguments (excluding argv[0])
+    - Arguments contain non-numeric strings (excluding argv[0])
 */
 int extractThicknessData(int argc, char *argv[], int thicknessDataCount, int thicknessData[])
 {
     if (thicknessDataCount < 1)
     {
-        printf("[ERROR] 要素数は1以上を指定してください。: %d\n", thicknessDataCount);
+        printf("[ERROR] Element count must be 1 or more: %d\n", thicknessDataCount);
         return 1;
     }
     if (argc != thicknessDataCount + 1)
     {
-        printf("[ERROR] %d 個の引数が必要です。%d 個の引数を受け取りました。\n", thicknessDataCount, argc - 1);
+        printf("[ERROR] %d arguments required. Received %d arguments.\n", thicknessDataCount, argc - 1);
         return 1;
     }
 
@@ -38,7 +40,7 @@ int extractThicknessData(int argc, char *argv[], int thicknessDataCount, int thi
         char *numberLike = argv[i + 1];
         if (!isNumber(strlen(numberLike), numberLike))
         {
-            printf("[ERROR] 数値に変換できません: %s\n", numberLike);
+            printf("[ERROR] Cannot convert to numeric value: %s\n", numberLike);
             return 1;
         }
         thicknessData[i] = atoi(numberLike);
@@ -46,14 +48,14 @@ int extractThicknessData(int argc, char *argv[], int thicknessDataCount, int thi
     return 0;
 }
 
-/* 文字列が整数値か判定する
+/* Check if a string is an integer value
 
 Args:
-    n (size_n): 文字数 (`\0` を除く)
-    numberLike (char*): 判定する文字列
+    n (size_n): Number of characters (excluding `\0`)
+    numberLike (char*): String to check
 
 Returns:
-    numberLike が整数値であれば true、そうでなければ false を返す
+    Returns true if numberLike is an integer value, false otherwise
 */
 bool isNumber(size_t n, char *numberLike)
 {
@@ -67,7 +69,7 @@ bool isNumber(size_t n, char *numberLike)
     return true;
 }
 
-/* 合計、最大値、最小値を計算する */
+/* Calculate sum, minimum, and maximum values */
 aggregates calculateStats(int n, int thicknessData[])
 {
     aggregates agg;
@@ -91,7 +93,7 @@ aggregates calculateStats(int n, int thicknessData[])
     return agg;
 }
 
-/* int 配列を表示する
+/* Display an integer array
 
 Example:
     {1, 2, 3} -> "{1, 2, 3}"

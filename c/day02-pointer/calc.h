@@ -1,6 +1,6 @@
 #include <stdbool.h>
 
-/* 計算結果をまとめる構造体 */
+/* Structure for aggregating calculation results */
 typedef struct
 {
     int sum;
